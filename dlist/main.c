@@ -40,6 +40,9 @@ int main(int argc, char *argv[])
 	*data1 = 133;
 	dlist_ins_next(&dlist, delement, data1);
 	print_dlist(&dlist);
+	*data1 = 222;
+	dlist_ins_prev(&dlist, delement, data1);
+	print_dlist(&dlist);
 	dlist_destory(&dlist);
 	return 0;
 }	

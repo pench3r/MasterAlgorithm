@@ -22,7 +22,7 @@ void dlist_init(Dlist *dlist, void (*destory)(void *data));
 // the destructor of dlist
 void dlist_destory(Dlist *dlist);
 
-int dlist_ins_prev(Dlist *dlist, DlistElmt *dlistelement, void *data);
+int dlist_ins_prev(Dlist *dlist, DlistElmt *dlistelement, const void *data);
 
 int dlist_ins_next(Dlist *dlist, DlistElmt *dlistelement, const void *data);
 

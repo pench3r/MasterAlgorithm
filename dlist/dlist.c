@@ -13,7 +13,7 @@ void dlist_init(Dlist *dlist, void (*destory)(void *data))
 /* if dlist is empty, dlist->head = dlist->tail = new_dlistelement;else dlistelement is NULL,
  * insert new_dlistelement to dlist->head prev, otherwise normal insert
  */
-int dlist_ins_prev(Dlist *dlist, DlistElmt *dlistelement, void *data)
+int dlist_ins_prev(Dlist *dlist, DlistElmt *dlistelement, const void *data)
 {
 	DlistElmt *new_dlistelement;
 	new_dlistelement = (DlistElmt *)malloc(sizeof(DlistElmt));
@@ -25,15 +25,15 @@ int dlist_ins_prev(Dlist *dlist, DlistElmt *dlistelement, void *data)
 		dlist->size++;
 		return 0;
 	}
-	if (dlistelement == NULL)
+	if (dlistelement == NULL || dlistelement->prev == NULL)
 	{
 		new_dlistelement->next = dlist->head;
 		dlist->head->prev = new_dlistelement;
 		dlist->head = new_dlistelement;		
 	} else {
+		dlistelement->prev->next = new_dlistelement;
 		new_dlistelement->prev = dlistelement->prev;
 		new_dlistelement->next = dlistelement;	
-		new_dlistelement->prev->next = new_dlistelement;
 		dlistelement->prev = new_dlistelement;
 	}
 	dlist->size++;
@@ -51,7 +51,7 @@ int dlist_ins_next(Dlist *dlist, DlistElmt *dlistelement, const void *data)
 		dlist->size++;
 		return 0;
 	}
-	if (dlistelement == NULL)
+	if (dlistelement == NULL || dlistelement->next == NULL)
 	{
 		new_dlistelement->prev = dlist->tail;
 		dlist->tail->next = new_dlistelement;
@@ -59,8 +59,8 @@ int dlist_ins_next(Dlist *dlist, DlistElmt *dlistelement, const void *data)
 	} else {
 		new_dlistelement->prev = dlistelement;
 		new_dlistelement->next = dlistelement->next;
-		dlistelement->next = new_dlistelement;
 		dlistelement->next->prev = new_dlistelement;
+		dlistelement->next = new_dlistelement;
 	}
 	dlist->size++;
 	return 0;
