@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 	element = list_head(&list);
 	element = list_next(element);
 	element = list_next(element);
-	//*data = 9999;
+	*data = 9999;
 	if (list_ins_next(&list, element, data) != 0) return 1;
 	print_list(&list);
 	list_destory(&list);
