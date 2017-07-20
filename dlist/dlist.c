@@ -17,7 +17,8 @@ int dlist_ins_prev(Dlist *dlist, DlistElmt *dlistelement, const void *data)
 {
 	DlistElmt *new_dlistelement;
 	new_dlistelement = (DlistElmt *)malloc(sizeof(DlistElmt));
-	new_dlistelement->data = (void *)data;
+	new_dlistelement->data = (void *)malloc(sizeof(int));
+	memcpy(new_dlistelement->data, data, sizeof(int));
 	new_dlistelement->prev=new_dlistelement->next=NULL;
 	if (dlist_size(dlist) == 0)
 	{
@@ -44,7 +45,8 @@ int dlist_ins_next(Dlist *dlist, DlistElmt *dlistelement, const void *data)
 {
 	DlistElmt *new_dlistelement = (DlistElmt *)malloc(sizeof(DlistElmt));
 	new_dlistelement->prev = new_dlistelement->next = NULL;
-	new_dlistelement->data = (void *)data;
+	new_dlistelement->data = (void *)malloc(sizeof(int));
+	memcpy(new_dlistelement->data, data, sizeof(int));
 	if (dlist_size(dlist) == 0)
 	{
 		dlist->head = dlist->tail = new_dlistelement;
@@ -97,7 +99,10 @@ void dlist_destory(Dlist *dlist)
 	void *data;
 	while (dlist_size(dlist) > 0)
 	{
-		if (dlist_remove(dlist, dlist_tail(dlist), (void **)&data) == 0) continue;
+		if (dlist_remove(dlist, dlist_tail(dlist), (void **)&data) == 0)
+		{
+			dlist->destory(data);
+		}
 	}
 	memset(dlist, 0, sizeof(Dlist));
 	return;

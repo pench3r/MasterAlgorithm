@@ -21,8 +21,7 @@ int main(int argc, char *argv[])
 {
 	Dlist dlist;
 	DlistElmt *delement;
-	int *data;
-	int *data1;
+	int *data, *data1;
 	dlist_init(&dlist, free);
 	for (int i=10; i > 0; i--)
 	{
@@ -44,5 +43,6 @@ int main(int argc, char *argv[])
 	dlist_ins_prev(&dlist, delement, data1);
 	print_dlist(&dlist);
 	dlist_destory(&dlist);
+	free(data1);
 	return 0;
 }	
