@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+static void print_list(List *list);
+
 int bitree_preorder(const BiTreeNode *node, List *list)
 {
 	if (!bitree_is_eob(node))
@@ -18,6 +20,16 @@ int bitree_preorder(const BiTreeNode *node, List *list)
 		}
 	}
 	return 0;
+}
+
+static void print_tree(const BiTree *tree)
+{
+	List list;
+	list_init(&list, free);
+	bitree_preorder(bitree_root(tree), &list);
+	print_list(&list);
+	list_destory(&list);
+	return;
 }
 
 static void print_list(List *list)
@@ -64,20 +76,40 @@ static int insert_int(BiTree *tree, int i)
 	
 }
 
+static BiTreeNode *search_int(BiTree *tree, int i)
+{
+	BiTreeNode *node;
+	node = bitree_root(tree);
+	while (!bitree_is_eob(node))
+	{
+		if ( i == *(int *)bitree_data(node)) return node;
+		if ( i < *(int *)bitree_data(node))
+		{
+			node = bitree_left(node);
+		} else {
+			node = bitree_right(node);
+		}
+	}
+	return NULL;
+}
+
 int main(int argc, char *argv[])
 {
 	BiTree tree;
-	// int i=8;
-	List list;
+	int i = 15;
+	BiTreeNode *node;
 	bitree_init(&tree, free);
-	list_init(&list, free);
 	// bitree_ins_left(&tree, NULL, &i);
 	if (insert_int(&tree, 20) != 0) return -1;
 	if (insert_int(&tree, 15) != 0) return -1;
 	if (insert_int(&tree, 25) != 0) return -1;
-	bitree_preorder(bitree_root(&tree), &list);
-	print_list(&list);	
+	if (insert_int(&tree, 10) != 0) return -1;
+	print_tree(&tree);
+	fprintf(stdout, "remove a node tree...\n");
+	node = search_int(&tree, i);
+	fprintf(stdout, "Found a node is containing %02d.\n", *(int *)bitree_data(node));
+	bitree_rem_left(&tree, node);
+	print_tree(&tree);
 	bitree_destory(&tree);
-	list_destory(&list);
 	return 0;
 }

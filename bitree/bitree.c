@@ -53,24 +53,25 @@ int bitree_ins_right(BiTree *tree, BiTreeNode *node, const void *data)
 
 int bitree_rem_left(BiTree *tree, BiTreeNode *node)
 {
-	BiTreeNode *pos;
+	BiTreeNode **pos;
 	if (bitree_size(tree) == 0) return 1;
 	if ( node == NULL)
 	{	
-		pos = tree->root;
+		pos = &tree->root;
 	} else {
-		pos = node->left;
+		pos = &node->left;
 	}
 	
-	if ( pos != NULL)
+	if ( *pos != NULL)
 	{
-		bitree_rem_left(tree, pos);
-		bitree_rem_right(tree, pos);
+		bitree_rem_left(tree, *pos);
+		bitree_rem_right(tree, *pos);
 		if (tree->destory != NULL)
 		{
-			tree->destory(pos->data);
+			tree->destory((*pos)->data);
 		}
-		free(pos);
+		free(*pos);
+		*pos = NULL;
 		tree->size--;
 		return 0;
 	}		
