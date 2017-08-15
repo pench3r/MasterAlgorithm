@@ -22,6 +22,7 @@ static void print_list(List *list)
 		}
 		i++;
 	}
+	return;
 }
 
 int main(int argc, char *argv[])
@@ -29,7 +30,6 @@ int main(int argc, char *argv[])
 	List list;
 	ListElmt *element;
 	int *data, i;
-	char *mes;
 	list_init(&list, free);
 	element = list_head(&list);
 	
@@ -46,18 +46,24 @@ int main(int argc, char *argv[])
 	{
 		element = list_next(element);
 	}
-	mes = "This is string";
-	if (list_ins_next(&list, element, mes) != 0) return 1;
-	element = list_next(element);
-	mes = list_data(element);
-	fprintf(stdout, "removing an element after the one containing %s\n", mes);
+	data = list_data(element);
+	fprintf(stdout, "removing an element after the one containing %03d\n", *data);
 	if (list_rem_next(&list, element, (void **)&data) != 0) return 1;
-	fprintf(stdout, "the data is %03d\n", *data);
+	fprintf(stdout, "remove the data of element is %03d\n", *data);
 	element = list_head(&list);
 	element = list_next(element);
 	element = list_next(element);
-	*data = 9999;
+	fprintf(stdout, "insert an element after the one containing %03d\n", *(int *)(list_data(element)));
+	data = (int *)malloc(sizeof(int));
+	*data = 29;
 	if (list_ins_next(&list, element, data) != 0) return 1;
+	fprintf(stdout, "continue insert...");
+	data = (int *)malloc(sizeof(int));
+	*data = 39;
+	if (list_ins_next(&list, element, data) != 0) return 1;
+	print_list(&list);
+	fprintf(stdout, "removing an element after the one containing %03d\n", *(int *)(list_data(element)));
+	if (list_rem_next(&list, element, (void **)&data) != 0) return 1;
 	print_list(&list);
 	list_destory(&list);
 	return 0;

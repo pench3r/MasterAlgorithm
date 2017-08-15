@@ -15,12 +15,12 @@ void list_init(List *list, void (*destory)(void *data))
 
 void list_destory(List *list)
 {
-	ListElmt *element;
 	void *data;
 	while (list_size(list) > 0)
 	{
-		if (list_rem_next(list, list_head(list), (void **)&data) == 0)
-			continue;
+		if (list_rem_next(list, NULL, (void **)&data) == 0 && list->destory !=NULL) {
+			list->destory(data);
+		}
 	}
 	memset(list, 0, sizeof(List));
 	return;
@@ -29,6 +29,7 @@ void list_destory(List *list)
 int list_rem_next(List *list, ListElmt *element, void **data)
 {
 	ListElmt *old_element;
+	if (list_size(list) == 0) return -1;
 	if (element == NULL)
 	{
 		*data = list->head->data;
@@ -39,12 +40,7 @@ int list_rem_next(List *list, ListElmt *element, void **data)
 			list->tail = NULL;
 		}
 	} else {
-		if (list_size(list) == 1 && element->next == NULL)
-		{
-			list->head = list->tail = NULL;
-			list->size--;
-			return 0;		
-		}
+		if(element->next == NULL) return -1;
 		*data = element->next->data;
 		old_element = element->next;
 		element->next = element->next->next;
