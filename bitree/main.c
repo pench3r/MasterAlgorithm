@@ -69,9 +69,21 @@ static int insert_int(BiTree *tree, int i)
 	}
 	if ((data = (int *)malloc(sizeof(int))) == NULL) return -1;
 	*data = i;
-	if (direction == 0) return bitree_ins_left(tree, NULL, data);
-	if (direction == 1) return bitree_ins_left(tree, prev, data);
-	if (direction == 2) return bitree_ins_right(tree, prev, data);
+	if (direction == 0) {
+		bitree_ins_left(tree, NULL, data);
+		free(data);
+		return 0;
+	}
+	if (direction == 1) {
+		bitree_ins_left(tree, NULL, data);
+		free(data);
+		return 0;
+	}
+	if (direction == 2) {
+		bitree_ins_left(tree, NULL, data);
+		free(data);
+		return 0;
+	}
 	return -1;
 	
 }
@@ -99,19 +111,18 @@ int main(int argc, char *argv[])
 	int i = 15;
 	BiTreeNode *node;
 	bitree_init(&tree, free);
-	// bitree_ins_left(&tree, NULL, &i);
+	bitree_ins_left(&tree, NULL, &i);
 	if (insert_int(&tree, 20) != 0) return -1;
-	if (insert_int(&tree, 15) != 0) return -1;
 	if (insert_int(&tree, 25) != 0) return -1;
 	if (insert_int(&tree, 10) != 0) return -1;
 	print_tree(&tree);
 	node = bitree_root(&tree);
-	printf("the data is %d.\n", *(int *)bitree_data(bitree_left(node)));
+	printf("the data is %d.\n", *(int *)bitree_data(node));
 	// fprintf(stdout, "remove a node tree...\n");
 	// node = search_int(&tree, i);
 	// fprintf(stdout, "Found a node is containing %02d.\n", *(int *)bitree_data(node));
 	// bitree_rem_left(&tree, node);
 	// print_tree(&tree);
-	// bitree_destory(&tree);
+	bitree_destory(&tree);
 	return 0;
 }

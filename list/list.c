@@ -59,7 +59,8 @@ int list_ins_next(List *list, ListElmt *element, const void *data)
 {
 	ListElmt *new_element;
 	if ((new_element = (ListElmt *)malloc(sizeof(ListElmt))) == NULL) return -1;
-	new_element->data = (void *)data;
+	new_element->data = (void *)malloc(sizeof(int));
+	memcpy(new_element->data, data, sizeof(int));
 	if (element == NULL)
 	{
 		new_element->next = list->head;

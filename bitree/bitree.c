@@ -73,7 +73,6 @@ int bitree_rem_left(BiTree *tree, BiTreeNode *node)
 		free(*pos);
 		*pos = NULL;
 		tree->size--;
-		return 0;
 	}		
 	return 0;
 }
@@ -120,7 +119,9 @@ int bitree_merge(BiTree *merge, BiTree *left, BiTree *right, const void *data)
 	
 void bitree_destory(BiTree *tree)
 {
-	bitree_rem_left(tree, NULL);
+	if (bitree_size(tree) > 0) {
+		bitree_rem_left(tree, NULL);
+	}
 	memset(tree, 0, sizeof(BiTree));
 	return;
 }
