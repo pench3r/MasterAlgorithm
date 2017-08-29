@@ -1,5 +1,5 @@
 #include "bitree.h"
-#include "list.h"
+#include "../list/list.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -105,11 +105,13 @@ int main(int argc, char *argv[])
 	if (insert_int(&tree, 25) != 0) return -1;
 	if (insert_int(&tree, 10) != 0) return -1;
 	print_tree(&tree);
-	fprintf(stdout, "remove a node tree...\n");
-	node = search_int(&tree, i);
-	fprintf(stdout, "Found a node is containing %02d.\n", *(int *)bitree_data(node));
-	bitree_rem_left(&tree, node);
-	print_tree(&tree);
-	bitree_destory(&tree);
+	node = bitree_root(&tree);
+	printf("the data is %d.\n", *(int *)bitree_data(bitree_left(node)));
+	// fprintf(stdout, "remove a node tree...\n");
+	// node = search_int(&tree, i);
+	// fprintf(stdout, "Found a node is containing %02d.\n", *(int *)bitree_data(node));
+	// bitree_rem_left(&tree, node);
+	// print_tree(&tree);
+	// bitree_destory(&tree);
 	return 0;
 }

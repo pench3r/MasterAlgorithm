@@ -50,6 +50,7 @@ int main(int argc, char *argv[])
 	fprintf(stdout, "removing an element after the one containing %03d\n", *data);
 	if (list_rem_next(&list, element, (void **)&data) != 0) return 1;
 	fprintf(stdout, "remove the data of element is %03d\n", *data);
+	free(data);
 	element = list_head(&list);
 	element = list_next(element);
 	element = list_next(element);
@@ -64,6 +65,7 @@ int main(int argc, char *argv[])
 	print_list(&list);
 	fprintf(stdout, "removing an element after the one containing %03d\n", *(int *)(list_data(element)));
 	if (list_rem_next(&list, element, (void **)&data) != 0) return 1;
+	free(data);
 	print_list(&list);
 	list_destory(&list);
 	return 0;

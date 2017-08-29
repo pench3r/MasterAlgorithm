@@ -75,6 +75,7 @@ int dlist_remove(Dlist *dlist, DlistElmt *dlistelement, void **data)
 	if (dlist_size(dlist) == 1)
 	{
 		dlist->tail = dlist->head = NULL;
+		free(dlistelement);	
 		dlist->size--;
 		return 0;
 	}

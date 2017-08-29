@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
 		if ((data = (int *)malloc(sizeof(int))) == NULL) return 1;
 		*data = i;
 		if (dlist_ins_next(&dlist, NULL, data) != 0) return 0;
+		free(data);
 	}
 	print_dlist(&dlist);
 	delement = dlist_head(&dlist);
@@ -37,11 +38,16 @@ int main(int argc, char *argv[])
 	fprintf(stdout, "three data is %d\n", *data);
 	data1 = (int *)malloc(sizeof(int));
 	*data1 = 133;
+	fprintf(stdout, "insert a element after containg %d.\n", *data);
 	dlist_ins_next(&dlist, delement, data1);
 	print_dlist(&dlist);
 	*data1 = 222;
+	fprintf(stdout, "insert a element before containg %d.\n", *data);
 	dlist_ins_prev(&dlist, delement, data1);
 	print_dlist(&dlist);
+	// dlist_remove(&dlist, delement, (void **)&data1);
+	// fprintf(stdout, "remove a element that containg %d.\n", *data1);
+	// print_dlist(&dlist);
 	dlist_destory(&dlist);
 	free(data1);
 	return 0;
